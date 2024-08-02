@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 
 const opportunitySchema = new mongoose.Schema({
 
- /*user_id: {
-    type: String,
-    //required: true,
-  },*/
+
   opportunityname:{
     type: String,
     required: true,
