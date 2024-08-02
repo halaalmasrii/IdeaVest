@@ -1,6 +1,5 @@
 const Opportunity = require("../models/opportunity");
 const mongoose = require("mongoose");
-
 const createOpportunity = async (req, res) => {
   try {
     let {
