@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const protect = require("../middlewares/authMiddleware");
+const fs = require("fs");
 
 const createUser = async (req, res) => {
   const { username, email, password, phoneNumber } = req.body;
@@ -47,13 +47,12 @@ const createUser = async (req, res) => {
       .json({ message: "Failed to create user", error: error.message });
   }
 };
-
 //////////
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  try {
+  try  {
     const user = await User.findOne({ email: email });
 
     if (!user) {
@@ -80,49 +79,83 @@ const loginUser = async (req, res) => {
 const getUser = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
+
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  return res.status(200).json({ user });
+  const image = await fs.promises.readFile(
+    `${process.cwd()}\\${user.profileImage}`
+  );
+  const base64Image = Buffer.from(image, "binary").toJSON();
+  console.log(base64Image);
+  const cv = await fs.promises.readFile(`${process.cwd()}\\${user.cv}`);
+  const base64Cv = Buffer.from(cv, "binary").toJSON();
+  const jsonUser = user.toJSON();
+  delete jsonUser.password;
+  jsonUser.profileImage = base64Image;
+  jsonUser.cv = base64Cv;
+  console.log(jsonUser);
+  return res.status(200).json(jsonUser);
 };
 
-//////////
+////////
 
 const updateUserProfile = async (req, res) => {
   const userId = req.params.id;
   const username = req.body.username;
   const phoneNumber = req.body.phoneNumber;
-  const user = await User.findById(userId);
+  let user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  if (username) user.username = username;
-  if (phoneNumber) user.phoneNumber = phoneNumber;
-  if (req.files) {
-    image = req.files.image[0].path;
-    const image = `/uploads/${user.image}`;
-
-    await fs.unlinkSync(image);
-
-    user.image = req.files.image[0].path;
-  } else {
-    image = user.image;
+  if (username) {
+    user.username = username;
   }
-
-  if (req.files) {
-    cv = req.files.cv[0].path;
-    const cv = `/uploads/${user.cv}`;
-
-    await fs.unlinkSync(cv);
-    user.cv = req.files.cv[0].path;
-  } else {
-    cv = user.cv;
+  if (phoneNumber) {
+    user.phoneNumber = phoneNumber;
   }
-
-  const updateUser = await user.save();
-  res.json({
-    updateUser,
+  user = await user.save();
+  return res.status(200).json({
+    user,
   });
+};
+
+//////////
+
+const updateUserImage = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const profileImagePath = req.files.image[0].path;
+    const user = await User.findById(userId);
+    console.log(user);
+    fs.unlink($`{process.cwd()}\\${user.profileImage}`, (err) => {
+      console.log(err);
+    });
+    user.profileImage = profileImagePath;
+    await user.save();
+
+    return res.json(user);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+//////
+
+const updateCv = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const cvPath = req.files.cv[0].path;
+    const user = await User.findById(userId);
+    fs.unlink(`${process.cwd()}\\${user.cv}`, (err) => {
+      console.log(err);
+    });
+    user.cv = cvPath;
+    await user.save();
+    return res.json(user);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
 };
 
 module.exports = {
@@ -130,4 +163,6 @@ module.exports = {
   loginUser,
   getUser,
   updateUserProfile,
+  updateUserImage,
+  updateCv,
 };

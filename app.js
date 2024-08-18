@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const opportunityRoutes = require('./routes/opportunityRoutes');
+const complaintRoutes = require('./routes/complaintRoutes');
+const adminComplaintRoutes = require('./routes/adminComplaintRoutes');
+const adminRoutes = require("./routes/adminRoutes");
 const multer = require('multer');
 const path = require('path')
 dotenv.config();
@@ -29,10 +32,10 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.log('MongoDB connection error: ', error);
 });
 
-
+app.use('/api/acomplaint', adminComplaintRoutes);
+app.use('/api/complaint', complaintRoutes);
 app.use('/api/opportunity', opportunityRoutes);
-
-
+app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
