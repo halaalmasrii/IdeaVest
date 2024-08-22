@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const opportunityRoutes = require('./routes/opportunityRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
 const adminComplaintRoutes = require('./routes/adminComplaintRoutes');
 const adminRoutes = require("./routes/adminRoutes");
 const multer = require('multer');
@@ -35,6 +36,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/api/acomplaint', adminComplaintRoutes);
 app.use('/api/complaint', complaintRoutes);
 app.use('/api/opportunity', opportunityRoutes);
+app.use('/api/favorite', favoriteRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
 app.listen(PORT, () => {

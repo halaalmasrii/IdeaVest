@@ -40,6 +40,9 @@ const opportunitySchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       ref: "User"
       },
+      favoriteCount:{
+        type :Number ,
+      },
 });
 
 const Opportunity = mongoose.model("Opportunity", opportunitySchema);

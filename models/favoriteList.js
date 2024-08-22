@@ -5,21 +5,12 @@ const favoriteListSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  opportunityname: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Opportunity",
-    required: true,
-  },
-  opportunityid: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Opportunity",
-  },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
-});
+  opportunityId: [{
+     type: mongoose.Schema.Types.ObjectId, 
+     ref: 'FavoriteOpportunity'
+     }],
+}
+);
 
 const FavoriteList = mongoose.model("FavoriteList", favoriteListSchema);
 
