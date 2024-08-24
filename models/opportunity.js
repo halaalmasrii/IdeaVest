@@ -12,37 +12,34 @@ const opportunitySchema = new mongoose.Schema({
   industry: {
     type: String,
   },
+  address: {
+    type: String,
+  },
+  goal: {
+    type: String,
+  },
   reqfunding: {
     type: Number,
   },
-
   fundingamount: {
     type: Number,
-  },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
   },
   role: {
     type: String,
     required: true,
-  },  
+  },
   isDeleted: {
     type: Boolean,
     default: false,
   },
   userId: {
-     type: mongoose.Schema.Types.ObjectId, 
-     ref: "User"
-     },
-     email: {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "User"
-      },
-      favoriteCount:{
-        type :Number ,
-      },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  email: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Opportunity = mongoose.model("Opportunity", opportunitySchema);

@@ -15,9 +15,8 @@ router.post('/register', [
 router.post('/login', userController.loginUser);
 router.get('/user/:id',isAuth , userController.getUser);
 router.put('/user/:id' , isAuth , userController.updateUserProfile);
-router.put('/user/image/:id', isAuth , userController.updateUserImage)
-router.put('/user/cv/:id' , isAuth , userController.updateCv)
-
+router.put('/user/image/:id', isAuth , userController.updateUserImage);
+router.put('/user/cv/:id' , isAuth , userController.updateCv);
 
 //router.route('/profile').post(protect, userController.updateUserProfile);
 //router.put('/user/:id/profile-image', isAuth, upload.single('profileImage'), userController.uploadProfileImage);

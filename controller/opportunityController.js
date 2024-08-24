@@ -1,3 +1,5 @@
+const FavoriteList = require("../models/favoriteList");
+const FavoriteOpportunity = require("../models/favoriteOpportunity");
 const Opportunity = require("../models/opportunity");
 const mongoose = require("mongoose");
 const createOpportunity = async (req, res) => {
@@ -8,6 +10,8 @@ const createOpportunity = async (req, res) => {
       fundingamount,
       reqfunding,
       description,
+      goal,
+      address,
       role,
     } = req.body;
     const userId = req.user.id;
@@ -24,6 +28,8 @@ const createOpportunity = async (req, res) => {
       fundingamount,
       reqfunding,
       description,
+      goal,
+      address,
       role,
       user: req.user._id,
     });
@@ -35,15 +41,26 @@ const createOpportunity = async (req, res) => {
 };
 const getOpportunity = async (req, res) => {
   const role = req.params.role;
-
+  const userId = req.user._id;
   if (!role) {
     const op = await Opportunity.find({ isDeleted: false }).populate("user");
-    return res.status(200).json(op);
   }
-  const op = await Opportunity.find({ role: role, isDeleted: false }).populate(
-    "user"
-  );
-  return res.status(200).json({ op });
+  if (role) {
+    const op = await Opportunity.find({
+      role: role,
+      isDeleted: false,
+    }).populate("user");
+  }
+  const favoriteList = await FavoriteList.findOne({ userId: userId });
+  const opportunities = await FavoriteOpportunity.find({
+    favoriteListId: favoriteList._id,
+  });
+
+  const filteredOp = op.filter((op) => {
+    return !opportunities.includes(op);
+  });
+
+  return res.status(200).json({ filteredOp });
 };
 
 const updateOpportunity = async (req, res) => {
@@ -54,6 +71,8 @@ const updateOpportunity = async (req, res) => {
       fundingamount,
       reqfunding,
       description,
+      goal,
+      address,
     } = req.body;
     const opportunityId = req.params.id;
     const opportunity = await opportunity.findByIdAndUpdate(opportunityId, {
@@ -62,6 +81,8 @@ const updateOpportunity = async (req, res) => {
       fundingamount,
       reqfunding,
       description,
+      goal,
+      address,
     });
     return res.json(opportunity);
   } catch (err) {

@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const FavoriteList = require("../models/favoriteList");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
@@ -35,8 +36,11 @@ const createUser = async (req, res) => {
       profileImage: image,
       cv: cv,
     });
-    console.log(newUser);
+
     await newUser.save();
+
+    const favoriteList = new FavoriteList({ userId: newUser._id });
+    await favoriteList.save();
 
     return res
       .status(201)
@@ -52,7 +56,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  try  {
+  try {
     const user = await User.findOne({ email: email });
 
     if (!user) {
@@ -157,7 +161,7 @@ const updateCv = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
-
+   
 module.exports = {
   createUser,
   loginUser,
@@ -165,4 +169,5 @@ module.exports = {
   updateUserProfile,
   updateUserImage,
   updateCv,
+ 
 };

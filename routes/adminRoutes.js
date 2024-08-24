@@ -4,8 +4,8 @@ const adminController = require('../controller/adminController');
 
 const isAuth = require("../middlewares/authMiddleware");
 
-router.post('/login', adminController.loginAdmin);
 
+router.post('/login', adminController.loginAdmin);
 
 router.get("/users", adminController.getUser);
 

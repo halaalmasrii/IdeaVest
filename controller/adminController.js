@@ -4,33 +4,29 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
+
 const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
-console.log(user);
+  console.log(user);
 
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
   const isEqual = await bcrypt.compare(password, user.password);
-    if (!isEqual) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-    const token = jwt.sign(
-      { email: user.email },
-      process.env.ACCESS_TOKEN_SECRET
-    );
-
-    try {
-      
-    //const isAdmin =  await  req.user.role;
-    
-    if (user.role === "admin") {
-      return res.status(200).json({ message: "welcome admin", user, token });  
-    }
-    else return res.status(403).json({error:'sorry,u r not admin'})
+  if (!isEqual) {
+    return res.status(400).json({ message: "Invalid password" });
   }
-  catch (error) {
+  const token = jwt.sign(
+    { email: user.email },
+    process.env.ACCESS_TOKEN_SECRET
+  );
+
+  try {
+    if (user.role === "admin") {
+      return res.status(200).json({ message: "welcome admin", user, token });
+    } else return res.status(403).json({ error: "sorry,u r not admin" });
+  } catch (error) {
     return res
       .status(500)
       .json({ message: "Failed to login", error: error.message });
