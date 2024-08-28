@@ -1,0 +1,231 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #e8e8e9;
+    color: #333;
+  
+    }
+    
+    .navbar {
+    direction: rtl;
+    padding: 10px 50px;
+    width: 100%;
+    background-color: #005f8b;
+    color: white;
+    }
+    
+    .navbar ul {
+    list-style: none;
+    display: flex;
+    }
+    
+    .navbar li {
+    margin: 0 15px;
+    
+    }
+    
+    .navbar a {
+    color: white;
+    text-decoration: none;
+    }
+    .app {
+    max-width: auto;
+    margin: 0 auto;
+    }
+    
+    .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #e8e8e9;
+    }
+    
+    .intro {
+    text-align: left;
+    max-width: 50%;
+    justify-content: space-around;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #0c78a3;
+    flex: 1;
+    margin: 10 10px;
+    color: #333;
+    }
+    
+    .mentor-image {
+    width: 40%;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    .opportunity-info {
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    margin: 20px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #c71c35;
+    font-size: larger;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    .opportunity-list {
+    padding: 20px;
+    
+    }
+    
+    .opportunity-container {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    font-size: large;
+    
+    }
+    
+    .opportunitys {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 10px;
+    max-width: 300px;
+    
+    }
+    
+    .add-opportunity {
+    background-color: #e9f4fb;
+    border: 1px dashed #0073b1;
+    border-radius: 10px;
+    padding: 80px 80px;
+    cursor: pointer;
+    text-align: center;
+    margin: 30px;
+    box-shadow: 0 4px 8px #005f8b;
+    }
+    
+    .opportunity-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    }
+    
+    .opportunity-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    .opportunity-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    .opportunity-form button:hover {
+    background-color: #1f272b;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    .form-tab {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+  
+  
+  
+    .lessons {
+    display:flex;
+    flex-wrap: wrap;
+    }
+    
+    .lesson {
+    background-color: #fff;
+    font-size: larger;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 20px ;
+    color: #333;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    button {
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px #0c78a3;
+    }
+    
+    button:hover {
+    background-color: #005f8b;
+    }
+    .contact{
+    text-align: center;
+    text-shadow:0 0 4px #535656;
+    }
+    .text-contact-us{
+    text-align: center;
+    background-color: #005f8b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin: auto;
+    box-shadow: 0 4px 8px #005f8b;
+  }
+  .details{
+  text-align: center;
+  font-size: large;
+  border-radius: 10px;
+  }
+  .text-opportunity{
+    text-align: center;
+    color: #c71c35;
+    font-size:40px;
+    border-radius: 30px;
+    padding: 10px;
+    background-color: #fff;
+    margin: auto;
+    box-shadow:0 4px 8px;
+  }
+  .color-idea{
+    font-size: 50px; 
+    color: #333;
+  }
+  .color-vest {
+    color: #157fb1;
+    font-size: 50px;
+  }
+  
+  
+  
+  
+    
+  
+  
+           
