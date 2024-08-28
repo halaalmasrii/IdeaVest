@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Opportunity = require("../models/opportunity");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
+const fs = require("fs")
 
 
 const loginAdmin = async (req, res) => {
@@ -33,7 +33,15 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+
+const getUsers =  async (req ,res )=>{
+  const users = await User.find();
+  console.log(users);
+  
+ return res.status(200).json({users})
+}
+
+const getUserById = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
 
@@ -55,10 +63,12 @@ const getUser = async (req, res) => {
   return res.status(200).json(jsonUser);
 };
 
+
+
 const blockUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findByIdAndUpdate(userId, { isBlocked: true });
+    const user = await User.findByIdAndUpdate(userId, { isBlocked: true },{new:true});
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -88,8 +98,14 @@ const softDeleteOpportunity = async (req, res) => {
     const opportunitytId = req.params.id;
     const opportunity = await Opportunity.findByIdAndUpdate({
       _id: opportunitytId,
-      isDeleted: true,
-    });
+     
+    },
+  {
+    isDeleted:true
+  },
+{
+  new:true
+});
     console.log(opportunity);
     return res.status(200).json(opportunity);
   } catch (err) {
@@ -109,7 +125,8 @@ const getOpportunityByUser = async (req, res) => {
 
 module.exports = {
   loginAdmin,
-  getUser,
+  getUserById,
+  getUsers,
   blockUser,
   getOpportunity,
   softDeleteOpportunity,

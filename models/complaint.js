@@ -14,13 +14,13 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  complainterId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
   userId: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: "User"
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
  
 

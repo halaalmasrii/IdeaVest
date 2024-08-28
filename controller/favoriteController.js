@@ -1,11 +1,11 @@
 const FavoriteList = require("../models/favoriteList");
 const FavoriteOpportunity = require("../models/favoriteOpportunity");
-
-const mongoose = require("mongoose");
 const Opportunity = require("../models/opportunity");
 
+const mongoose = require("mongoose");
+
 const createFavoriteOpportunity = async (req, res) => {
-  const { opportunityId } = req.params.opportunityId;
+  const  opportunityId  = req.params.opportunityId;
   const userId = req.user._id;
 
   try {
@@ -28,7 +28,7 @@ const getFavoriteList = async (req, res) => {
   const opportunities = await FavoriteOpportunity.find({
     favoriteListId: favoriteList._id,
     isDeletedFromList: false,
-  }).populate("Opportunity");
+  }).populate("opportunityId");
 
   return res.status(200).json({ opportunities });
 };
@@ -39,10 +39,9 @@ const DeleteFavoriteOpportunity = async (req, res) => {
     const userId = req.user._id;
     const favoriteList = await FavoriteList.findOne({ userId: userId });
     const updatedFavoriteOpportunity =
-      await FavoriteOpportunity.findOneAndUpdate(
+      await FavoriteOpportunity.findOneAndDelete(
         { favoriteListId: favoriteList._id, opportunityId: opportunityId },
-        { isDeletedFromList: true },
-        { new: true }
+      
       );
 
     return res.status(200).json({ updatedFavoriteOpportunity });

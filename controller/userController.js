@@ -7,7 +7,14 @@ const fs = require("fs");
 const createUser = async (req, res) => {
   const { username, email, password, phoneNumber } = req.body;
 
-  if (!username || !email || !password || !phoneNumber || !req.files.cv) {
+  if (
+    !username ||
+    !email ||
+    !password ||
+    !phoneNumber ||
+    !req.files.cv ||
+    !req.files.image
+  ) {
     return res
       .status(400)
       .json({ message: "Please provide all required fields" });
@@ -46,7 +53,7 @@ const createUser = async (req, res) => {
       .status(201)
       .json({ message: "User created successfully", user: newUser });
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ message: "Failed to create user", error: error.message });
   }
@@ -80,7 +87,7 @@ const loginUser = async (req, res) => {
 
 //////////
 
-const getUser = async (req, res) => {
+const getUserById = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
 
@@ -132,7 +139,7 @@ const updateUserImage = async (req, res) => {
     const profileImagePath = req.files.image[0].path;
     const user = await User.findById(userId);
     console.log(user);
-    fs.unlink($`{process.cwd()}\\${user.profileImage}`, (err) => {
+    fs.unlink(`${process.cwd()}\\${user.profileImage}`, (err) => {
       console.log(err);
     });
     user.profileImage = profileImagePath;
@@ -161,13 +168,12 @@ const updateCv = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
-   
+
 module.exports = {
   createUser,
   loginUser,
-  getUser,
+  getUserById,
   updateUserProfile,
   updateUserImage,
   updateCv,
- 
 };

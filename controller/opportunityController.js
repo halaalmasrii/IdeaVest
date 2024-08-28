@@ -1,6 +1,7 @@
 const FavoriteList = require("../models/favoriteList");
 const FavoriteOpportunity = require("../models/favoriteOpportunity");
 const Opportunity = require("../models/opportunity");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 const createOpportunity = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const createOpportunity = async (req, res) => {
       goal,
       address,
       role,
+      user, 
     } = req.body;
     const userId = req.user.id;
     if (role === "investing") {
@@ -42,11 +44,12 @@ const createOpportunity = async (req, res) => {
 const getOpportunity = async (req, res) => {
   const role = req.params.role;
   const userId = req.user._id;
+  let op;
   if (!role) {
-    const op = await Opportunity.find({ isDeleted: false }).populate("user");
+     op = await Opportunity.find({ isDeleted: false }).populate("user");
   }
   if (role) {
-    const op = await Opportunity.find({
+     op = await Opportunity.find({
       role: role,
       isDeleted: false,
     }).populate("user");
@@ -75,15 +78,18 @@ const updateOpportunity = async (req, res) => {
       address,
     } = req.body;
     const opportunityId = req.params.id;
-    const opportunity = await opportunity.findByIdAndUpdate(opportunityId, {
-      opportunityname,
-      industry,
-      fundingamount,
-      reqfunding,
-      description,
-      goal,
-      address,
-    });
+    console.log(opportunityId);
+    Opportunity.findByIdAndUpdate({},{})
+    const opportunity = await Opportunity.findByIdAndUpdate(opportunityId, {
+     opportunityname:opportunityname,
+      industry:industry,
+      fundingamount:fundingamount,
+      reqfunding:reqfunding,
+      description:description,
+      goal:goal,
+      address:address,
+    },
+  {new:true});
     return res.json(opportunity);
   } catch (err) {
     return res.status(400).json({ error: err.message });
@@ -95,8 +101,14 @@ const softDeleteOpportunity = async (req, res) => {
     const opportunitytId = req.params.id;
     const opportunity = await Opportunity.findByIdAndUpdate({
       _id: opportunitytId,
-      isDeleted: true,
-    });
+     
+    },
+  {
+    isDeleted:true
+  },
+{
+  new:true
+});
     console.log(opportunity);
     return res.status(200).json(opportunity);
   } catch (err) {
@@ -105,8 +117,10 @@ const softDeleteOpportunity = async (req, res) => {
 };
 const getOpportunityByUser = async (req, res) => {
   let userId = req.params.userId;
+console.log(userId);
 
   let opportunity = await Opportunity.find().populate("user");
+console.log(opportunity);
 
   const filteredOp = opportunity.filter((op) => {
     return op.user._id.toString() === userId;

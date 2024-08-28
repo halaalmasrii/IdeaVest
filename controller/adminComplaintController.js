@@ -3,19 +3,26 @@ const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
 const getComplaint = async (req, res) => {
-  const co = await Complaint.find().populate("complainterId");
+  const co = await Complaint.find().populate("userId");
   return res.status(200).json({ co });
 };
 
 const getComplaintByUser = async (req, res) => {
+
   let userId = req.params.userId;
 
-  let complaint = await Complaint.find().populate("complainterId");
+  try {
+    const complaints = await Complaint.findOne({user:userId}).populate("user");
 
-  const filteredCo = complaint.filter((co) => {
-    return co.complainterId._id.toString() === userId;
-  });
-  res.status(200).json({ filteredCo });
+  
+    
+
+   return  res.status(200).json({ complaints });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to get complaints", error: error.message });
+  }
 };
 
 const replayComplaintByEmail = async (req, res) => {
@@ -31,13 +38,13 @@ const replayComplaintByEmail = async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.USER, //"hala.almasri.s.2002@gmail.com", 
+        user: process.env.USER, //"hala.almasri.s.2002@gmail.com",
         pass: process.env.APP_PASSWORD, //"waaf tsmf wbyf wdeg",
       },
     });
 
     let mailOptions = {
-      from: '"Idea Vest" <' + process.env.USER + '>',//' "Idea Vest" <hala.almasri.s.2002@gmail.com>', 
+      from: '"Idea Vest" <' + process.env.USER + ">", //' "Idea Vest" <hala.almasri.s.2002@gmail.com>',
       to: accusedEmail,
       subject: "Complaint Notification", // Subject line
       text: "We have received a complaint about you. We would be glad to meet at our office.", // plain text body

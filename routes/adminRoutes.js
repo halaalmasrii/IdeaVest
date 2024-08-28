@@ -7,14 +7,18 @@ const isAuth = require("../middlewares/authMiddleware");
 
 router.post('/login', adminController.loginAdmin);
 
-router.get("/users", adminController.getUser);
+router.get("/user/:id", adminController.getUserById);
 
-router.patch("/users/:id/block", adminController.blockUser);
+router.patch("/users/block/:id", adminController.blockUser);
 
 router.get("/opportunities", adminController.getOpportunity);
 
+router.get("/opportunities/:role", adminController.getOpportunity);
+
 router.delete("/opportunities/:id", adminController.softDeleteOpportunity);
 
-router.get("/user/:userId", isAuth, adminController.getOpportunityByUser);
+router.get("/opportunity/:userId", isAuth, adminController.getOpportunityByUser);
 
+router.get('/users' , adminController.getUsers
+)
 module.exports = router;

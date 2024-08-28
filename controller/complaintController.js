@@ -7,6 +7,7 @@ const createComplaint = async (req, res) => {
       accused,
         description,
         date,
+        user
     } = req.body;
     const userId = req.user.id;
     const email = req.user.email;
@@ -15,6 +16,7 @@ const createComplaint = async (req, res) => {
       accused,
         description,
         date,
+        user,
         user: req.user._id,
        email : req.user.email,
 

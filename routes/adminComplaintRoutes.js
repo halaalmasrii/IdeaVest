@@ -5,7 +5,7 @@ const isAuth = require("../middlewares/authMiddleware")
 
 router.get('/' , isAuth, adminComplaintController.getComplaint);
 router.get('/user/:userId' ,isAuth, adminComplaintController.getComplaintByUser);
-router.get('/user/:complaintId' ,isAuth, adminComplaintController.replayComplaintByEmail);
+router.get('/user/replay/:complaintId' ,isAuth, adminComplaintController.replayComplaintByEmail);
 
 
 module.exports = router;
