@@ -1,0 +1,38 @@
+main {
+  padding: 20px;
+  text-align: center;
+}
+
+.user-complaint-form {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.user-complaint-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-complaint-form label {
+  margin-bottom: 10px;
+}
+
+.user-complaint-form input,
+.user-complaint-form textarea {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.user-complaint-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
