@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { updateSearchIndex } = require("./favoriteOpportunity");
 
 const opportunitySchema = new mongoose.Schema({
   opportunityname: {
@@ -36,10 +37,19 @@ const opportunitySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+   user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    require:true,
+   },
   email: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  bought_by:[{
+    type:mongoose.Schema.Types.ObjectId ,
+    ref:"User"
+}]
 });
 
 const Opportunity = mongoose.model("Opportunity", opportunitySchema);
