@@ -1,0 +1,33 @@
+/* src/components/Navbar.css */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background-color: #1521a2;
+  color: #fff;
+}
+
+.navbar-brand h1 {
+  color: #fff;
+  margin: 0;
+  font-size: 24px;
+  padding-right: 20px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.navbar-link:hover {
+  background-color: #4164ce;
+}
