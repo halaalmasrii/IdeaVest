@@ -4,54 +4,35 @@ const User = require("../models/user");
 
 const mongoose = require("mongoose");
 
-const createUserOpportunity = async (req,res) => {
-    try{
-    let {
-        investorId,
-        partnerId,
-        OpportunityId,
-      } = req.body;
-      const userId = req.user.id;
-
-      const userOpportunity = new UserOpportunity({
-        investorId,
-        partnerId,
-        OpportunityId,
-        user: req.user._id,
-      });
-      const savedUserOpportunity = await userOpportunity.save();
-      return res.status(201).json(savedUserOpportunity);
-    }
-    catch (err) {
-        return res.status(400).json({ error: err.message });
-      }
-
-
-
+const createUserOpportunity = async (req, res) => {
+  const opportunityId = req.params.opportunityId;
+  const userId = req.user._id;
+  try {
+    const opportunity = await Opportunity.findOne({ userId: userId });
+    const userOpportunity = new UserOpportunity({
+      userId: user._id, 
+      opportunityId: user._id,
+      opportunityId: opportunityId, });
+    await userOpportunity.save();
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+  res.status(201).json({ message: "Successfull investing " });
 };
-
-const removeFromAvailableOpportunities = async (req,res) => {
-
- try{
-    const { opportunityId } = req.params;
-      
-        await opportunity.deleteOne({ opportunityId });
-      
-        const removeOpportunity = await Opportunity.findOneAndUpdate(
-          
-          { $pull: { opportunity: { $in: [opportunityId] } } },
-          { new: true }
-        );
-      
-        return res.status(200).json({ removeOpportunity });
-      }
-      catch (err) {
-        return res.status(400).json({ error: err.message });
-      }
-    };
-
-
+const removeFromAvailableOpportunities = async (req, res) => {
+  try {
+    const opportunitytId = req.params.id;
+    const opportunity = await Opportunity.findByIdAndUpdate(
+      { _id: opportunitytId },
+      { isDeleted: true },
+      { new: true } );
+    console.log(opportunity);
+    return res.status(200).json(opportunity);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
 module.exports = {
-    createUserOpportunity,
-    removeFromAvailableOpportunities
+  createUserOpportunity,
+  removeFromAvailableOpportunities,
 };
