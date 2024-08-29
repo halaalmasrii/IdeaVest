@@ -5,18 +5,9 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // date: {
-  //   type: String,
-  //   required: true,
-  // },
-  //timestamp
   opportunityId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Opportunity",
-  },
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
   },
 
   userId: {
