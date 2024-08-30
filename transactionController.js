@@ -3,6 +3,8 @@ const Transaction = require('../models/transaction');
 const Opportunity = require("../models/opportunity");
 const mongoose=require('mongoose');
 const stripe=require('stripe')('sk_test_51Ps8SDLB7H0EAB8wjeaq7kpDmdusgyBlXgq97eYWuWgRBxX8rBFRWe8gPpeOuvNmYMwI8Wj6gLzDTQPFf5VdlGmE00Trhfs9J7');
+
+
 const createCheckoutSession= async (req, res) => {
     const opportunityId=req.params.opportinityId;
     const userId=req.user.id;

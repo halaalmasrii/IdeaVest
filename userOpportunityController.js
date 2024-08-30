@@ -10,8 +10,7 @@ const createUserOpportunity = async (req, res) => {
   try {
     const opportunity = await Opportunity.findOne({ userId: userId });
     const userOpportunity = new UserOpportunity({
-      userId: user._id, 
-      opportunityId: user._id,
+      userId: userId, 
       opportunityId: opportunityId, });
     await userOpportunity.save();
   } catch (err) {
